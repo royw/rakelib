@@ -1,5 +1,15 @@
+# Version bump tasks
+#
+# These tasks are for bumping the version in your version.rb file.
+#
+# Expects a version.rb file in your project that contains a 'VERSION = "\d\S+"' line.
+
+# rake version:bump:patch  # bump the patch version
+
 # add to your .gemspec:
 #   gem.add_development_dependency('versionomy')
+# or add to your Gemfile:
+#   gem 'versionomy'
 
 begin
   require 'versionomy'
@@ -9,11 +19,12 @@ begin
       task :patch do
         Dir['**/version.rb'].each do |version_file|
           str = IO.read(version_file)
-          if str =~ /\"(\d+\.\d+\.\d+)\"/m
+          if str =~ /VERSION\s*=\s*\"?(\d\S+)\"?/m
             version = Versionomy.parse $1
-            new_version = version.bump(:tiny)
-            File.open(version_file, 'w') {|f| f.puts str.gsub(version.to_s, new_version.to_s)}
-            puts "updated version from #{version.to_s} to #{new_version}"
+            old_version = version.to_s
+            new_version = version.bump(:tiny).to_s
+            File.open(version_file, 'w') {|f| f.puts str.gsub(old_version, new_version)}
+            puts "updated version from #{old_version} to #{new_version}"
           end
         end
       end
