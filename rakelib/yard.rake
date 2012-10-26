@@ -13,8 +13,10 @@
 
 # add to your .gemspec:
 #   gem.add_development_dependency('yard')
+#   gem.add_development_dependency('redcarpet')
 # or add to your Gemfile:
 #   gem 'yard'
+#   gem 'redcarpet'
 #
 # if you want syntax highlighting via pygments (http://pygments.org)
 # * install pygments
@@ -30,7 +32,7 @@
 #   puts 'Howdy!'
 # ```
 
-YARD_SOURCE_DIRS = %w{ lib app controller model }
+SOURCE_DIRS ||= %w{ lib app controller model }
 
 begin
   require 'yard'
@@ -54,7 +56,7 @@ begin
   end
 
   YARD::Rake::YardocTask.new do |t|
-    t.files = ["{#{YARD_SOURCE_DIRS.join(',')}}/**/*.rb", "**/*.md"]
+    t.files = ["{#{SOURCE_DIRS.join(',')}}/**/*.rb"]
     t.options = ['--output-dir', 'doc/app/', '--markup', 'markdown', '--readme', 'README.md']
   end
 

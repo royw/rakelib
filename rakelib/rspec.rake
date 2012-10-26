@@ -1,6 +1,7 @@
 # RSpec http://rspec.info/
 
 # expects your specifications to be ./spec/**/*_spec.rb
+TEST_DIRS ||= %w{ spec }
 
 # rake rcov                # Run RSpec code examples
 # rake spec                # Run RSpec code examples
@@ -26,12 +27,16 @@ begin
 
   RSpec::Core::RakeTask.new(:spec) do |spec|
     spec.rspec_opts = ["-c", "-f progress"] #, "-r ./spec/spec_helper.rb"]
-    spec.pattern = FileList['spec/**/*_spec.rb']
+    spec.pattern = FileList["{#{TEST_DIRS.join(',')}}/**/*_spec.rb"]
   end
 
-  RSpec::Core::RakeTask.new(:rcov) do |spec|
-    spec.pattern = 'spec/**/*_spec.rb'
-    spec.rcov = true
+  begin
+    require 'rcov'
+    RSpec::Core::RakeTask.new(:rcov) do |spec|
+      spec.pattern = FileList["{#{TEST_DIRS.join(',')}}/**/*_spec.rb"]
+      spec.rcov = true
+    end
+  rescue LoadError
   end
 rescue LoadError
   warn "rspec not available, spec and rcov tasks not provided."

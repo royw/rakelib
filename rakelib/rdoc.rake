@@ -8,7 +8,8 @@
 # while version.rb should contain a 'VERSION = "\d\S+"' line.
 
 # The directories that might contain source code to document
-RDOC_SOURCE_DIRS = %w{ lib app controller model }
+SOURCE_DIRS ||= %w{ lib app controller model }
+APP_NAME ||= ''
 
 # Will output HTML to the ./rdoc directory
 
@@ -32,7 +33,7 @@ begin
     Dir["**/VERSION"].each do |fn|
       version =  File.read(fn).strip
     end
-    Dir["{#{RDOC_SOURCE_DIRS.join(',')}}/**/version.rb"].each do |fn|
+    Dir["{#{SOURCE_DIRS.join(',')}}/**/version.rb"].each do |version_file|
       str = IO.read(version_file)
       version = $1 if str =~ /VERSION\s*=\s*\"?(\d\S+)\"?/m
     end
@@ -41,7 +42,7 @@ begin
     rdoc.title = "#{APP_NAME} #{version}".strip
     rdoc.rdoc_files.include('README*')
     rdoc.rdoc_files.include('**/*.rdoc')
-    rdoc.rdoc_files.include("{#{RDOC_SOURCE_DIRS.join(',')}}/**/*.rb")
+    rdoc.rdoc_files.include("{#{SOURCE_DIRS.join(',')}}/**/*.rb")
   end
 rescue LoadError
   warn "rdoc not available, rdoc tasks not provided."

@@ -7,6 +7,7 @@ group :development do
   gem 'rspec' #, '~> 2.6.0'
   gem 'rspec-nc'
   gem 'simplecov' #, '>= 0'
+  gem 'simplecov-rcov' #, '>= 0'
   gem 'rdoc' #, '~> 3.9.4'
   gem 'cucumber'
   gem 'cane'
@@ -14,4 +15,5 @@ group :development do
   gem 'versionomy'
   gem 'yard'
   gem 'yard-pygmentsrb'
+  gem 'redcarpet'
 end

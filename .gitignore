@@ -1,0 +1,7 @@
+coverage
+doc
+rdoc
+db/data
+Gemfile.lock
+.yardoc
+

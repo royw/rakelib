@@ -18,7 +18,7 @@
 #   gem 'sequel'
 
 begin
-  require_relative '../db/config'
+  require File.expand_path('db/config', Rake.application.original_dir)
   namespace 'db' do
     desc "Run database migrations where mode is: #{Database::DB_MODES.join(', ')}"
     task :migrate, :mode do |t, args|
