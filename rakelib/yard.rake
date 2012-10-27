@@ -40,9 +40,9 @@ begin
 
   desc 'Remove the generated documentation'
   task :clean do
-    puts "removing old documentation"
-    FileUtils.rm_rf File.expand_path('doc', File.dirname(__FILE__))
-    FileUtils.rm_rf File.expand_path('.yardoc', File.dirname(__FILE__))
+    puts "removing yard documentation"
+    FileUtils.rm_rf File.expand_path(Settings[:yard_output_dir], Rake.application.original_dir)
+    FileUtils.rm_rf File.expand_path('.yardoc', Rake.application.original_dir)
   end
 
   desc 'Convert .md.erb documentation to .md'
@@ -56,8 +56,8 @@ begin
   end
 
   YARD::Rake::YardocTask.new do |t|
-    t.files = ["{#{SOURCE_DIRS.join(',')}}/**/*.rb"]
-    t.options = ['--output-dir', 'doc/app/', '--markup', 'markdown', '--readme', 'README.md']
+    t.files = ["{#{Settings[:source_dirs].join(',')}}/**/*.rb"]
+    t.options = ['--output-dir', Settings[:yard_output_dir], '--markup', 'markdown', '--readme', 'README.md']
   end
 
   desc 'Generate Documentation from .md.erb, .md, .rb'

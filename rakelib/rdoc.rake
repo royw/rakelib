@@ -7,9 +7,9 @@
 # Note, a VERSION file should be a file that contains just a version,
 # while version.rb should contain a 'VERSION = "\d\S+"' line.
 
-# The directories that might contain source code to document
-SOURCE_DIRS ||= %w{ lib app controller model }
-APP_NAME ||= ''
+# Expects these settings:
+# Settings[:app_name]
+# Settings[:source_dirs]
 
 # Will output HTML to the ./rdoc directory
 
@@ -25,24 +25,20 @@ APP_NAME ||= ''
 
 begin
   require 'rdoc/task'
+  require File.expand_path('version.rb', File.dirname(__FILE__))
 
-  raise 'APP_NAME constant not set' if APP_NAME.nil?
+  desc 'Remove the generated documentation'
+  task :clean do
+    puts "removing rdoc documentation"
+    FileUtils.rm_rf File.expand_path(Settings[:rdoc_output_dir], Rake.application.original_dir)
+  end
 
   Rake::RDocTask.new do |rdoc|
-    version = ''
-    Dir["**/VERSION"].each do |fn|
-      version =  File.read(fn).strip
-    end
-    Dir["{#{SOURCE_DIRS.join(',')}}/**/version.rb"].each do |version_file|
-      str = IO.read(version_file)
-      version = $1 if str =~ /VERSION\s*=\s*\"?(\d\S+)\"?/m
-    end
-
-    rdoc.rdoc_dir = 'rdoc'
-    rdoc.title = "#{APP_NAME} #{version}".strip
+    rdoc.rdoc_dir = Settings[:rdoc_output_dir]
+    rdoc.title = "#{Settings[:app_name]} #{Version.version_get}".strip
     rdoc.rdoc_files.include('README*')
     rdoc.rdoc_files.include('**/*.rdoc')
-    rdoc.rdoc_files.include("{#{SOURCE_DIRS.join(',')}}/**/*.rb")
+    rdoc.rdoc_files.include("{#{Settings[:source_dirs].join(',')}}/**/*.rb")
   end
 rescue LoadError
   warn "rdoc not available, rdoc tasks not provided."
