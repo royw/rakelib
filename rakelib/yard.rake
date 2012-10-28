@@ -32,11 +32,15 @@
 #   puts 'Howdy!'
 # ```
 
-SOURCE_DIRS ||= %w{ lib app controller model }
+require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
+#Settings[:source_dirs]
+#Settings[:yard_output_dir]
+
 
 begin
   require 'yard'
   require 'erb'
+  require File.expand_path('version.rb', File.dirname(__FILE__))
 
   desc 'Remove the generated documentation'
   task :clean do
@@ -57,7 +61,10 @@ begin
 
   YARD::Rake::YardocTask.new do |t|
     t.files = ["{#{Settings[:source_dirs].join(',')}}/**/*.rb"]
-    t.options = ['--output-dir', Settings[:yard_output_dir], '--markup', 'markdown', '--readme', 'README.md']
+    t.options = ['--title', "#{Settings[:app_name]} #{Version.version_get}".strip,
+                 '--output-dir', Settings[:yard_output_dir],
+                 '--markup', 'markdown',
+                 '--readme', 'README.md']
   end
 
   desc 'Generate Documentation from .md.erb, .md, .rb'

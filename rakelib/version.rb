@@ -1,3 +1,6 @@
+require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
+# Settings[:source_dirs]
+
 module Version
   VERSION_REGEX = /VERSION\s*=\s*[\"\']?(\d[^\"\']*)[\"\']?/m
   def self.versionrb_filenames

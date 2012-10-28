@@ -1,9 +1,18 @@
+# Simple Coverage tasks for ruby 1.9+ https://github.com/colszowka/simplecov
+#
+# This will run coverage as part of rspec and cucumber features.
+#
+# Note that the simplecov task provides the covered_percent file used by cane.rake's quality task.
+
+require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
+# Settings[:coverage_dir]
+
 begin
   require 'simplecov'
   require 'simplecov-rcov'
 
   def coverage_directory
-    dir = File.expand_path('../doc/coverage', File.dirname(__FILE__))
+    dir = File.expand_path(Settings[:coverage_output_dir], Rake.application.original_dir)
     FileUtils.mkdir_p dir
     dir
   end
@@ -21,8 +30,8 @@ begin
   task :simplecov do
     SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
     SimpleCov.configure do
-      coverage_dir 'doc/coverage'
-      root File.expand_path('..', File.dirname(__FILE__))
+      coverage_dir Settings[:coverage_output_dir]
+      root Rake.application.original_dir
     end
     SimpleCov.start
   end

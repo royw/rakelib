@@ -7,6 +7,7 @@
 # Note, a VERSION file should be a file that contains just a version,
 # while version.rb should contain a 'VERSION = "\d\S+"' line.
 
+require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # Expects these settings:
 # Settings[:app_name]
 # Settings[:source_dirs]

@@ -1,7 +1,8 @@
 # RSpec http://rspec.info/
 
+require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # expects your specifications to be ./spec/**/*_spec.rb
-Settings[:test_dirs] ||= %w{ spec }
+#Settings[:test_dirs] ||= %w{ spec }
 
 # rake rcov                # Run RSpec code examples
 # rake spec                # Run RSpec code examples
