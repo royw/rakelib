@@ -37,3 +37,6 @@ where:
 
     Note: all paths are relative to the project's root directory.
 
+## Examples
+
+This repository is also an example of how to use the rakelib tasks.

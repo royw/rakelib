@@ -27,8 +27,9 @@ begin
     SimpleCov.start
   end
 
-  # adds simplecov task as a prerequisite to the :spec task
+  # adds simplecov task as a prerequisite to the RSpec and Cucumber tasks
   task :spec => :simplecov
+  task :features => :simplecov
 rescue LoadError => ex
   puts "Can not perform code coverage using simplecov.  #{ex.to_s}"
 end
