@@ -1,8 +1,8 @@
 # Version bump tasks
 #
-# These tasks are for bumping the version in your version.rb file.
-#
-# Expects a version.rb file in your project that contains a 'VERSION = "\d\S+"' line.
+# These tasks are for interacting with your version file.  The version file may be either
+# the bundler standard of version.rb (which defines a constant VERSION within a module)
+# or the jeweler standard of VERSION (which contains just a version number).
 
 # rake version:bump:patch  # bump the patch version
 
@@ -11,10 +11,7 @@
 # or add to your Gemfile:
 #   gem 'versionomy'
 
-
-
 begin
-  require 'versionomy'
   require File.expand_path('version.rb', File.dirname(__FILE__))
 
   namespace :version do

@@ -7,8 +7,9 @@
 # a database uri String.
 
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
-# Settings[:db_migrations_dir]
-# Settings[:db_config_file]
+# Uses these settings:
+# * Settings[:db_migrations_dir]
+# * Settings[:db_config_file]
 
 #
 # There is an example db/config.rb as part of the rakelib project.

@@ -1,5 +1,12 @@
+# This module provides methods for interacting with your version file.  The version
+# file may be either the bundler standard of version.rb (which defines a constant VERSION within a module)
+# or the jeweler standard of VERSION (which contains just a version number).
+
+require 'versionomy'
+
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
-# Settings[:source_dirs]
+# Uses these settings:
+# * Settings[:source_dirs]
 
 module Version
   VERSION_REGEX = /VERSION\s*=\s*[\"\']?(\d[^\"\']*)[\"\']?/m

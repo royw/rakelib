@@ -5,7 +5,8 @@
 # Note that the simplecov task provides the covered_percent file used by cane.rake's quality task.
 
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
-# Settings[:coverage_dir]
+# Uses these settings:
+# * Settings[:coverage_dir]
 
 begin
   require 'simplecov'

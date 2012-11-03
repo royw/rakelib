@@ -11,7 +11,7 @@ This is a smorgasbord collection of rake tasks that can easily be added to a pro
 
 ## Globals
 
-The following settings should be assigned values in your Rakefile.
+The following settings may be assigned values in your Rakefile.
 
 ``` ruby
     Settings = {

@@ -6,11 +6,11 @@
 #
 # Note that the simplecov.rake's simplecov task generates the covered_percent file used here.
 #
-# Expects code in one or more of these directories:
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
-# Settings[:code_dirs]
-# Settings[:source_dirs]
-# Settings[:coverage_output_dir]
+# Uses these settings:
+# * Settings[:coverage_dirs]
+# * Settings[:source_dirs]
+# * Settings[:coverage_output_dir]
 
 # add to your .gemspec:
 #   gem.add_development_dependency('cane')
@@ -22,7 +22,7 @@ begin
 
   desc "Run cane to check quality metrics"
   Cane::RakeTask.new(:quality) do |cane|
-    cane.abc_glob = "{#{Settings[:code_dirs].join(',')}}/**/*.rb"
+    cane.abc_glob = "{#{Settings[:coverage_dirs].join(',')}}/**/*.rb"
     cane.abc_max = 10
     cane.add_threshold "#{Settings[:coverage_output_dir]}/covered_percent", :>=, 90
     cane.no_style = false

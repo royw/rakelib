@@ -33,8 +33,10 @@
 # ```
 
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
-#Settings[:source_dirs]
-#Settings[:yard_output_dir]
+# Uses these settings:
+# * Settings[:app_name]
+# * Settings[:source_dirs]
+# * Settings[:yard_output_dir]
 
 
 begin
