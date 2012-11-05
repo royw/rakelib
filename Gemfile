@@ -16,4 +16,5 @@ group :development do
   gem 'yard'
   gem 'yard-pygmentsrb'
   gem 'redcarpet'
+  gem 'doc_to_dash'
 end

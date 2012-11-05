@@ -1,11 +1,13 @@
+require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
+
 # Simple Coverage tasks for ruby 1.9+ https://github.com/colszowka/simplecov
 #
 # This will run coverage as part of rspec and cucumber features.
 #
 # Note that the simplecov task provides the covered_percent file used by cane.rake's quality task.
-
-require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
+#
 # Uses these settings:
+#
 # * Settings[:coverage_dir]
 
 begin

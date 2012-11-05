@@ -6,7 +6,7 @@ Settings[:app_name]             = 'Example App'
 Settings[:yard_output_dir]      = 'doc/ydoc'
 Settings[:rdoc_output_dir]      = 'doc/rdoc'
 Settings[:coverage_output_dir]  = 'doc/coverage'
-Settings[:source_dirs]          = %w{ lib }
+Settings[:source_dirs]          = %w{ lib rakelib }
 Settings[:coverage_dirs]        = %w{ lib spec }
 
 # Note that all of our rake tasks are defined in .rake files in rakelib/
