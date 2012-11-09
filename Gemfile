@@ -14,7 +14,11 @@ group :development do
   gem 'sequel'
   gem 'versionomy'
   gem 'yard'
+  gem 'yard-cucumber'
+  gem 'yard-rspec'
+  gem 'yard-notes'
   gem 'yard-pygmentsrb'
   gem 'redcarpet'
   gem 'doc_to_dash'
+  #gem 'doc_to_dash', :path => '/Users/roy/Projects/github/others/doc_to_dash'
 end

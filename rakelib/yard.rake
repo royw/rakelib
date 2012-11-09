@@ -44,7 +44,9 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 
 begin
   require 'yard'
-  require 'erb'
+  require 'yard-cucumber'
+  require 'yard-rspec'      # doesn't work
+  #require 'yard-notes'       # doesn't work
   require File.expand_path('version.rb', File.dirname(__FILE__))
 
   desc 'Remove the generated documentation'
@@ -54,24 +56,55 @@ begin
     FileUtils.rm_rf File.expand_path('.yardoc', Rake.application.original_dir)
   end
 
-  desc 'Convert .md.erb documentation to .md'
-  task :markdown_erb do
-    Dir['**/*.md.erb'].each do |fn|
-      output_file = File.expand_path(fn.gsub(/\.md\.erb$/, '.md'), File.dirname(__FILE__))
-      puts "processing: #{fn} to #{output_file}"
-      template = ERB.new IO.read(fn)
-      File.open(output_file, 'w') {|f| f.puts template.result(binding)}
+  begin
+    require 'erb'
+    desc 'Convert .md.erb documentation to .md'
+    task :markdown_erb do
+      Dir['**/*.md.erb'].each do |fn|
+        output_file = File.expand_path(fn.gsub(/\.md\.erb$/, '.md'), File.dirname(__FILE__))
+        puts "processing: #{fn} to #{output_file}"
+        template = ERB.new IO.read(fn)
+        File.open(output_file, 'w') {|f| f.puts template.result(binding)}
+      end
+    end
+  rescue LoadError
+    task :markdown_erb do
     end
   end
 
   YARD::Rake::YardocTask.new do |t|
-    t.files = ["{#{Settings[:source_dirs].join(',')}}/**/*.{rb,rake}"]
+    t.files = (Dir["{#{Settings[:source_dirs].join(',')}}/**/*.rb"] +
+        Dir["{#{Settings[:test_dirs].join(',')}}/**/*_spec.rb"] +
+        Dir["{#{Settings[:test_dirs].join(',')}}/**/*.feature"] +
+        Dir["{#{Settings[:test_dirs].join(',')}}/**/support/**/*.rb"]).uniq
+
     t.options = ['--title', "#{Settings[:app_name]} #{Version.version_get}".strip,
                  '--output-dir', Settings[:yard_output_dir],
                  '--protected', '--private', '--embed-mixins',
                  '--markup', 'markdown',
                  '--readme', 'README.md']
+    #puts "t.files => #{t.files.pretty_inspect}"
   end
+
+  require 'digest/md5'
+  task :yard_config do
+    FileUtils.mkdir_p File.expand_path('~/.yard')
+    config_file = File.expand_path("~/.yard/config")
+    config = SymbolHash.new
+    config = YAML.load IO.read(config_file) if File.exist? config_file
+    config_sha1 = Digest::MD5.hexdigest(config.to_s)
+    config[:'yard-cucumber'] ||= {"menus"=>["features", "tags", "steps", "step definitions", "specifications"],
+                                  "language"=>{"step_definitions"=>["Given", "When", "Then", "And"]}}
+    config[:'load_plugins'] ||= true
+    config[:'ignored_plugins'] ||= []
+    config[:'autoload_plugins'] ||= []
+    config[:'safe_mode'] ||= false
+    unless config_sha1 == Digest::MD5.hexdigest(config.to_s)
+      File.open(config_file, 'w') {|f| f.puts YAML.dump(config)}
+    end
+  end
+
+  task :yard => [:yard_config]
 
   desc 'Generate Documentation from .md.erb, .md, .rb'
   task :doc => [:markdown_erb, :yard]

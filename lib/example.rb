@@ -1,5 +1,6 @@
 unless Kernel.respond_to?(:require_relative)
   module Kernel
+    # TODO need documentation
     def require_relative(path)
       filename = path.to_str
       filename += '.rb' unless filename =~ /\.rb$/
