@@ -17,6 +17,7 @@ group :development do
   gem 'yard-cucumber'
   gem 'yard-rspec'
   gem 'yard-notes'
+  gem 'yard-blame'
   gem 'yard-pygmentsrb'
   gem 'redcarpet'
   gem 'doc_to_dash'

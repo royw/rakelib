@@ -1,7 +1,14 @@
 require 'pp'
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 
-desc "Show the project's settings"
-task :settings do
-  pp Settings
+namespace :settings do
+  desc "Show the project's settings"
+  task :show do
+    puts Settings.map{ |key, value| "  #{sprintf("%20s", ':' + key.to_s)} => #{value}" }.join("\n")
+  end
+
+  desc 'Display info about the Settings hash'
+  task :help do
+    puts SettingsHelp
+  end
 end

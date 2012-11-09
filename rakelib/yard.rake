@@ -20,6 +20,11 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #   gem 'yard'
 #   gem 'redcarpet'
 #
+# if your want source listings to include git blame, then use
+#   gem.add_development_dependency('yard-blame')
+# or
+#   gem 'yard-blame'
+#
 # if you want syntax highlighting via pygments (http://pygments.org)
 #
 # * install pygments
@@ -47,6 +52,12 @@ begin
   require 'yard-cucumber'
   require 'yard-rspec'      # doesn't work
   #require 'yard-notes'       # doesn't work
+
+  begin
+    require 'yard-blame'
+  rescue LoadError
+  end
+
   require File.expand_path('version.rb', File.dirname(__FILE__))
 
   desc 'Remove the generated documentation'
