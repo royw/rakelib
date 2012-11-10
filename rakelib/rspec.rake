@@ -11,17 +11,17 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # for ruby < 1.9
 # add to your .gemspec:
 #   gem.add_development_dependency('rspec')
-#   gem.add_development_dependency('rcov')
+#   gem.add_development_dependency('rcov') if RUBY_VERSION =~ %r{^1\.8\.}
 # or add to your Gemfile:
 #   gem 'rspec'
-#   gem 'rcov'
+#   gem 'rcov' if RUBY_VERSION =~ %r{^1\.8\.}
 #
 # for ruby >= 1.9
 #   gem.add_development_dependency('rspec')
-#   gem.add_development_dependency('simplecov')
+#   gem.add_development_dependency('simplecov')  unless RUBY_VERSION =~ %r{^1\.8\.}
 # or add to your Gemfile:
 #   gem 'rspec'
-#   gem 'simplecov'
+#   gem 'simplecov' unless RUBY_VERSION =~ %r{^1\.8\.}
 
 begin
   require 'rspec/core'

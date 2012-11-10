@@ -1,3 +1,5 @@
+require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
+
 # Cane https://github.com/square/cane
 # Quality metrics
 # Fails your build if code quality thresholds are not met.
@@ -6,12 +8,11 @@
 #
 # Note that the simplecov.rake's simplecov task generates the covered_percent file used here.
 #
-require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # Uses these settings:
 # * Settings[:coverage_dirs]
 # * Settings[:source_dirs]
 # * Settings[:coverage_output_dir]
-
+#
 # add to your .gemspec:
 #   gem.add_development_dependency('cane')
 # or add to your Gemfile:
