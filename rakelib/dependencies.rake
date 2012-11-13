@@ -11,8 +11,8 @@ namespace :update do
     needed_gems = []
     Dir["#{Rake.application.original_dir}/rakelib/*.rake"].each do |fn|
       IO.readlines(fn).each do |line|
-        if line =~ %r{^#\s+gem\s+['"]([^'"]+)['"]([^#]+)}
-          needed_gems << "gem '#{$1}'#{$2}"
+        if line =~ %r{^#\s+(gem\s*[\('"].*)$}
+          needed_gems << $1
         end
       end
     end
@@ -24,13 +24,13 @@ namespace :update do
 
   unless @gemspec.nil?
     desc "Update the #{@gemspec} file with dependencies from rakelib/*.rake files"
-    task :gemspecfile do
+    task :gemspec do
       needed_gems = []
       Dir["#{Rake.application.original_dir}/rakelib/*.rake"].each do |fn|
         IO.readlines(fn).each do |line|
           #   gem.add_development_dependency('cane')
-          if line =~ %r{^\s*#\s*gem\.add_development_dependency\s*\(?\s*['"]([^'"]+)['"]\s*\)?([^#]+)}
-            needed_gems << "gem.add_development_dependency('#{$1}')#{$2}"
+          if line =~ %r{^\s*#\s*(gem\.add_development_dependency.*)$}
+            needed_gems << $1
           end
         end
       end
@@ -54,7 +54,7 @@ namespace :init do
   end
 
   desc "replace #{File.basename(@gemspec)} with #{File.basename(@gemspec)}.init"
-  task :gemspecfile do
+  task :gemspec do
     initial_gem_file = File.expand_path(File.basename(@gemspec) + '.init', Rake.application.original_dir)
     if File.exist? initial_gem_file
       gem_file = File.expand_path(File.basename(@gemspec), Rake.application.original_dir)

@@ -16,15 +16,24 @@ Gem::Specification.new do |gem|
   gem.version       = Example::VERSION
   gem.add_development_dependency('cane')
   gem.add_development_dependency('cucumber')
+  gem.add_development_dependency('doc_to_dash')
+  gem.add_development_dependency('factory_girl', '~> 2.0')  if RUBY_VERSION =~ %r{^1\.8\.}
+  gem.add_development_dependency('factory_girl', '~> 3.0')  if RUBY_VERSION =~ %r{^1\.9\.}
   gem.add_development_dependency('pygments.rb')
+  gem.add_development_dependency('rake')
+  gem.add_development_dependency('ramaze')
   gem.add_development_dependency('rcov') if RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('rdoc')
   gem.add_development_dependency('redcarpet')
   gem.add_development_dependency('rspec')
   gem.add_development_dependency('sequel')
   gem.add_development_dependency('simplecov')  unless RUBY_VERSION =~ %r{^1\.8\.}
+  gem.add_development_dependency('simplecov-rcov')  unless RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('versionomy')
+  gem.add_development_dependency('webrat')
   gem.add_development_dependency('yard')
   gem.add_development_dependency('yard-blame')
+  gem.add_development_dependency('yard-cucumber')
   gem.add_development_dependency('yard-pygmentsrb')
+  gem.add_development_dependency('yard-rspec')
 end
