@@ -1,5 +1,6 @@
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 
+require 'tempfile'
 
 module RamazeSetup
   def self.create
@@ -7,7 +8,13 @@ module RamazeSetup
     parent_dir = File.dirname app_dir
     app_dir_name = File.basename app_dir
     Dir.chdir(parent_dir) do
-      `ramaze create -f #{app_dir_name}`
+      temp_file = Tempfile.new(app_dir_name)
+      temp_dirname = temp_file.path
+      temp_file.close(true)
+      FileUtils.cp_r app_dir_name, temp_dirname
+      puts `ramaze create -f #{app_dir_name}`
+      FileUtils.cp_r Dir["#{temp_dirname}/**/*"], app_dir_name
+      FileUtils.rm_rf temp_dirname
     end
   end
 
