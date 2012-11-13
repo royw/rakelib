@@ -15,9 +15,13 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #
 # add to your .gemspec:
 #   gem.add_development_dependency('yard')
+#   gem.add_development_dependency('yard-cucumber')
+#   gem.add_development_dependency('yard-rspec')
 #   gem.add_development_dependency('redcarpet')
 # or add to your Gemfile:
 #   gem 'yard'
+#   gem 'yard-cucumber'
+#   gem 'yard-rspec'
 #   gem 'redcarpet'
 #
 # if your want source listings to include git blame, then use
@@ -72,7 +76,7 @@ begin
     desc 'Convert .md.erb documentation to .md'
     task :markdown_erb do
       Dir['**/*.md.erb'].each do |fn|
-        output_file = File.expand_path(fn.gsub(/\.md\.erb$/, '.md'), File.dirname(__FILE__))
+        output_file = fn.gsub(/\.md\.erb$/, '.md')
         puts "processing: #{fn} to #{output_file}"
         template = ERB.new IO.read(fn)
         File.open(output_file, 'w') {|f| f.puts template.result(binding)}
@@ -84,15 +88,23 @@ begin
   end
 
   YARD::Rake::YardocTask.new do |t|
-    t.files = (Dir["{#{Settings[:source_dirs].join(',')}}/**/*.rb"] +
-        Dir["{#{Settings[:test_dirs].join(',')}}/**/*_spec.rb"] +
-        Dir["{#{Settings[:test_dirs].join(',')}}/**/*.feature"] +
-        Dir["{#{Settings[:test_dirs].join(',')}}/**/support/**/*.rb"]).uniq
+    files = []
+    unless Settings[:source_dirs].empty?
+      files += Dir["{#{Settings[:source_dirs].join(',')}}/**/*.rb"]
+    end
+    unless Settings[:test_dirs].empty?
+      files += Dir["{#{Settings[:test_dirs].join(',')}}/**/*_spec.rb"]
+      files += Dir["{#{Settings[:test_dirs].join(',')}}/**/*.feature"]
+      files += Dir["{#{Settings[:test_dirs].join(',')}}/**/support/**/*.rb"]
+    end
+
+    t.files = files.uniq
 
     t.options = ['--title', "#{Settings[:app_name]} #{Version.version_get}".strip,
                  '--output-dir', Settings[:yard_output_dir],
                  '--protected', '--private', '--embed-mixins',
                  '--markup', 'markdown',
+                 '--files', Dir["*.md"].join(','),
                  '--readme', 'README.md']
     #puts "t.files => #{t.files.pretty_inspect}"
   end

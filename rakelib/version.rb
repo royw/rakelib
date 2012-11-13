@@ -1,4 +1,3 @@
-
 require 'versionomy'
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 

@@ -1,4 +1,3 @@
-require 'pp'
 require 'fileutils'
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 require File.expand_path('rakelib/gem_file.rb', Rake.application.original_dir)

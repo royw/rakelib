@@ -32,11 +32,13 @@ class RakeSettings
   # @option options [String] :db_dir relative path to the directory where your database lives
   # @option options [String] :db_config_file relative path to the database config file
   # @option options [String] :db_migration_dir relative path to the directory where the database migration files belong
+  # @option options [String] :sloc_report relative path to file that contains the sloccount report for Jenkins
+  # @option options [String] :sloc_report_raw relative path to file that contains the raw sloccount report
   def setting(key, options={})
     @setting_values ||= {}
     @setting_descriptions ||= {}
-    @setting_values[key] = options[:value]
-    @setting_descriptions[key] = options[:description]
+    @setting_values[key] ||= options[:value]
+    @setting_descriptions[key] ||= options[:description]
   end
 
   # shorthand for using Settings[key] to access Settings.settings_values[key]
@@ -57,6 +59,9 @@ class RakeSettings
   def initialize
     setting :app_name, :value => File.basename(File.dirname(File.dirname(__FILE__))).camel_case,
             :description => '[String] the application name'
+
+    setting :app_dir, :value => File.basename(File.dirname(File.dirname(__FILE__))),
+            :description => '[String] the project directory'
 
     setting :source_dirs, :value => %w{ lib app controller model }.select{|dir| File.exist? dir},
             :description => '[Array<String>] the directories that may contain source files to be documented'
@@ -79,6 +84,9 @@ class RakeSettings
     setting :coverage_output_dir, :value => 'doc/coverage',
             :description => '[String] relative path to the directory to write coverage info to'
 
+    setting :bin_dir, :value => 'bin',
+            :description => '[String] relative path to the directory for scripts'
+
     setting :db_dir, :value => 'db',
             :description => '[String] relative path to the directory where your database lives'
 
@@ -87,6 +95,12 @@ class RakeSettings
 
     setting :db_migration_dir, :value => 'db/migrations',
             :description => '[String] relative path to the directory where the database migration files belong'
+
+    setting :sloc_report, :value => 'doc/sloc.txt',
+            :description => '[String] relative path to file that contains the sloccount report for Jenkins'
+
+    setting :sloc_report_raw, :value => 'doc/sloc.raw.txt',
+            :description => '[String] relative path to file that contains the raw sloccount report'
   end
 
   # @return [String] the Settings help message

@@ -19,9 +19,11 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # for ruby >= 1.9
 #   gem.add_development_dependency('rspec')
 #   gem.add_development_dependency('simplecov')  unless RUBY_VERSION =~ %r{^1\.8\.}
+#   gem.add_development_dependency('simplecov-rcov')  unless RUBY_VERSION =~ %r{^1\.8\.}
 # or add to your Gemfile:
 #   gem 'rspec'
 #   gem 'simplecov' unless RUBY_VERSION =~ %r{^1\.8\.}
+#   gem 'simplecov-rcov' unless RUBY_VERSION =~ %r{^1\.8\.}
 
 begin
   require 'rspec/core'
@@ -45,6 +47,23 @@ begin
       spec.rcov = true
     end
   rescue LoadError
+  end
+
+  namespace :init do
+    desc 'Initialize rspec infrastructure'
+    task :spec do
+      dir = File.expand_path('spec', Rake.application.original_dir)
+      FileUtils.mkdir_p dir unless File.exist? dir
+      helper_file = File.join(dir, 'spec_helper.rb')
+      unless File.exist? helper_file
+        File.open(helper_file, 'w') do |f|
+          f.puts "$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))"
+          f.puts "$LOAD_PATH.unshift(File.dirname(__FILE__))"
+          f.puts ""
+          f.puts "require '#{Settings[:app_dir]}'"
+        end
+      end
+    end
   end
 rescue LoadError
   warn "rspec not available, spec and rcov tasks not provided."

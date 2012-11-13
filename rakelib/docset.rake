@@ -1,3 +1,19 @@
+# doc_to_dash
+# Generate docset from either rdoc or yard documentation
+#
+# rake rdoc_docset             # Generate a docset for Dash from rdoc
+# rake yard_docset             # Generate a docset for Dash from yard
+#
+# Uses these settings:
+# * Settings[:app_name]
+# * Settings[:doc_dir]
+# * Settings[:rdoc_output_dir]
+# * Settings[:yard_output_dir]
+#
+# add to your .gemspec:
+#   gem.add_development_dependency('doc_to_dash')
+# or add to your Gemfile:
+#   gem 'doc_to_dash'
 
 begin
   require 'doc_to_dash'
