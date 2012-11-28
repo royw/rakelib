@@ -1,29 +1,18 @@
-# RSpec http://rspec.info/
-
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
+
+# RSpec http://rspec.info/
+#
 # Uses these settings:
 # * Settings[:test_dirs]
 # * Settings[:coverage_output_dir]
-
+#
 # rake rcov                # Run RSpec code examples
 # rake spec                # Run RSpec code examples
-
-# for ruby < 1.9
+#
 # add to your .gemspec:
 #   gem.add_development_dependency('rspec')
-#   gem.add_development_dependency('rcov') if RUBY_VERSION =~ %r{^1\.8\.}
 # or add to your Gemfile:
 #   gem 'rspec'
-#   gem 'rcov' if RUBY_VERSION =~ %r{^1\.8\.}
-#
-# for ruby >= 1.9
-#   gem.add_development_dependency('rspec')
-#   gem.add_development_dependency('simplecov')  unless RUBY_VERSION =~ %r{^1\.8\.}
-#   gem.add_development_dependency('simplecov-rcov')  unless RUBY_VERSION =~ %r{^1\.8\.}
-# or add to your Gemfile:
-#   gem 'rspec'
-#   gem 'simplecov' unless RUBY_VERSION =~ %r{^1\.8\.}
-#   gem 'simplecov-rcov' unless RUBY_VERSION =~ %r{^1\.8\.}
 
 begin
   require 'rspec/core'

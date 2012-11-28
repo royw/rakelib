@@ -6,7 +6,7 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #
 # rake quality             # Run cane to check quality metrics
 #
-# Note that the simplecov.rake's simplecov task generates the covered_percent file used here.
+# Note that the coverage.rake's simplecov task generates the covered_percent file used here.
 #
 # Uses these settings:
 # * Settings[:coverage_dirs]

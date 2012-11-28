@@ -1,3 +1,17 @@
+# This rakefile is used to support gem dependencies.
+#
+# rake init:gemfile        # replace Gemfile with Gemfile.init
+# rake init:gemspec        # replace rakelib.gemspec with rakelib.gemspec.init
+# rake update:gemfile      # Update the Gemfile with dependencies from rakelib/*.rake files
+# rake update:gemspec      # Update the /Users/roy/Projects/github/mine/rakelib/rakelib.gemspec file with dependencies from rakelib/*.rake files
+#
+# The basic pattern is for the .rake files to document in the comments which development gems they need
+# as either a "gem(...)" or as a "gem.add_development_dependency(...)".  The update tasks then scan all the
+# rakelib/*.rake files extracting these gem commands from the comments.  The duplicates are then removed from
+# this set of gems and finally the development gem commands in either GemFile or *.gemspec are replaced.
+#
+# Note, it is ok for a rake file to just have comments to specify which gems to include.
+
 require 'fileutils'
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 require File.expand_path('rakelib/gem_file.rb', Rake.application.original_dir)

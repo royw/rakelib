@@ -1,3 +1,9 @@
+# Source Lines Of Code Count (sloccount).
+# Requires that sloccount be installed on your system.
+# mac:
+#   brew install sloccount
+#
+# rake sloc                # generate sloccount metric reports used by Jenkins
 
 unless `which sloccount`.strip.empty?
   desc "generate sloccount metric reports used by Jenkins"

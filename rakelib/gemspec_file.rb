@@ -1,5 +1,8 @@
 require 'fileutils'
 
+# Encapsulation for modifying the *.gemspec
+# The .gemspec file is split into four sections: @header, @body, @dev_dependencies, and @footer.
+# This is to facilitate updating (replacing) the gem.add_development_dependency lines.
 class GemspecFile
   def initialize
     @header = []
@@ -8,8 +11,10 @@ class GemspecFile
     @footer = []
   end
 
+  # Load the given .gemspec file
+  # @param [#to_s] filename the path to the .gemspec to load
   def load(filename)
-    @filename = filename
+    @filename = filename.to_s
     mode = :in_header
     IO.readlines(@filename).each do |line|
       case mode
@@ -41,10 +46,15 @@ class GemspecFile
     end
   end
 
+  # replace the "gem.add_development_dependency(...)" lines in the development block
+  # @param [Array<String>] gems an array of "gem.add_development_dependency(...)" lines for the development block
+  # @return [String] the new @@dev_dependencies
   def dev_gems=(gems)
     @dev_dependencies = gems.map{|gem| "  #{gem}"}
   end
 
+  # reassemble the file and save it
+  # @param [String] filename the destination .gemspec path
   def save(filename=@filename)
     backup_filename = filename + '~'
     File.delete(backup_filename) if File.exist? backup_filename

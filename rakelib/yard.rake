@@ -127,10 +127,15 @@ begin
     end
   end
 
-  task :yard => [:yard_config]
+  task :yard => [:yard_config] do
+    puts "cp #{Dir['*.svg']}, #{Settings[:yard_output_dir]}"
+    FileUtils.cp Dir["*.svg"], Settings[:yard_output_dir]
+    FileUtils.cp Dir["*.pdf"], Settings[:yard_output_dir]
+    FileUtils.cp Dir["*.png"], Settings[:yard_output_dir]
+  end
 
   desc 'Generate Documentation from .md.erb, .md, .rb'
-  task :doc => [:markdown_erb, :yard]
+  task :doc => [:clean, :markdown_erb, :dia_to_svg, :yard]
 rescue LoadError
   warn "yard or erb not available, yard documentation tasks not provided."
 end

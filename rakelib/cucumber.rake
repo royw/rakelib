@@ -10,14 +10,6 @@
 #
 # Optionally
 #
-# add to your .gemspec:
-#   gem.add_development_dependency('webrat')
-#   gem.add_development_dependency('factory_girl', '~> 2.0')  if RUBY_VERSION =~ %r{^1\.8\.}
-#   gem.add_development_dependency('factory_girl', '~> 3.0')  if RUBY_VERSION =~ %r{^1\.9\.}
-# or add to your Gemfile:
-#   gem 'webrat'
-#   gem ('factory_girl', '~> 2.0') if RUBY_VERSION =~ %r{^1\.8\.}
-#   gem ('factory_girl', '~> 3.0') if RUBY_VERSION =~ %r{^1\.9\.}
 
 begin
   require 'cucumber/rake/task'

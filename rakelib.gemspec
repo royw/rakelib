@@ -15,7 +15,10 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Example::VERSION
   gem.add_development_dependency('cane')
+  gem.add_development_dependency('capybara')
   gem.add_development_dependency('cucumber')
+  gem.add_development_dependency('cucumber-api-steps')
+  gem.add_development_dependency('curb')
   gem.add_development_dependency('doc_to_dash')
   gem.add_development_dependency('factory_girl', '~> 2.0')  if RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('factory_girl', '~> 3.0')  if RUBY_VERSION =~ %r{^1\.9\.}
@@ -25,7 +28,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('rcov') if RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('rdoc')
   gem.add_development_dependency('redcarpet')
-  gem.add_development_dependency('rspec')
   gem.add_development_dependency('sequel')
   gem.add_development_dependency('simplecov')  unless RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('simplecov-rcov')  unless RUBY_VERSION =~ %r{^1\.8\.}

@@ -1,3 +1,9 @@
+# Helper tasks for showing the project build settings.
+#
+# rake settings:help       # Display info about the Settings hash
+# rake settings:show       # Show the project's settings
+#
+
 require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 require File.expand_path('rakelib/gem_file.rb', Rake.application.original_dir)
 require File.expand_path('rakelib/gemspec_file.rb', Rake.application.original_dir)
