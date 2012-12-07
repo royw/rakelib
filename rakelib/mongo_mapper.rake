@@ -13,27 +13,33 @@
 #   gem 'mongo'
 #   gem 'mongo_mapper', "~> 0.12.0"
 #   gem 'bson_ext'
-#   gem 'bcrypt-ruby', :lib => 'bcrypt'
+#   gem 'bcrypt-ruby', :require => 'bcrypt'
 
-require 'mongo_mapper'
-require 'database_cleaner'
+begin
 
-namespace :mongodb do
-  desc 'run mongodb'
-  task :start do
-    puts `launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist`
+  require 'mongo_mapper'
+  require 'database_cleaner'
+
+  namespace :mongodb do
+    desc 'run mongodb'
+    task :start do
+      puts `launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist`
+    end
+
+    desc 'stop mongodb'
+    task :stop do
+      puts `launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist`
+    end
+
+    desc 'reset database'
+    task :reset do
+      MongoMapper.connection = Mongo::Connection.new('localhost', nil, :logger => ::Logger.new($stdout))
+      MongoMapper.database = "gung_ho-dev}"
+      DatabaseCleaner[:mongo_mapper].strategy = :truncation
+      DatabaseCleaner.clean
+    end
   end
 
-  desc 'stop mongodb'
-  task :stop do
-    puts `launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist`
-  end
-
-  desc 'reset database'
-  task :reset do
-    MongoMapper.connection = Mongo::Connection.new('localhost', nil, :logger => ::Logger.new($stdout))
-    MongoMapper.database = "gung_ho-dev}"
-    DatabaseCleaner[:mongo_mapper].strategy = :truncation
-    DatabaseCleaner.clean
-  end
+rescue LoadError => ex
+  puts "Can not load mongo_mapper tasks.  #{ex.to_s}"
 end
