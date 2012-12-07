@@ -17,38 +17,51 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #   gem 'simplecov'  unless RUBY_VERSION =~ %r{^1\.8\.}
 #   gem 'simplecov-rcov'  unless RUBY_VERSION =~ %r{^1\.8\.}
 
-begin
-  require 'simplecov'
-  require 'simplecov-rcov'
-
-  def coverage_directory
-    dir = File.expand_path(Settings[:coverage_output_dir], Rake.application.original_dir)
-    FileUtils.mkdir_p dir
-    dir
-  end
-
-  class SimpleCov::Formatter::MergedFormatter
-    def format(result)
-      SimpleCov::Formatter::HTMLFormatter.new.format(result)
-      SimpleCov::Formatter::RcovFormatter.new.format(result)
-      File.open("#{coverage_directory}/covered_percent", "w") do |f|
-        f.puts result.source_files.covered_percent.to_f
-      end
-    end
-  end
-
+namespace :init do
+  desc 'initialize simplecov helper'
   task :simplecov do
-    SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
-    SimpleCov.configure do
-      coverage_dir Settings[:coverage_output_dir]
-      root Rake.application.original_dir
-    end
-    SimpleCov.start
-  end
+    simplecov_helper = File.expand_path('simplecov_helper.rb', Rake.application.original_dir)
+    File.open(simplecov_helper, 'w') do |f|
+      f.puts <<-END_HELPER
+require 'simplecov'
+require 'simplecov-rcov'
 
-  # adds simplecov task as a prerequisite to the RSpec and Cucumber tasks
-  task :spec => :simplecov
-  task :features => :simplecov
-rescue LoadError => ex
-  puts "Can not perform code coverage using simplecov.  #{ex.to_s}"
+def coverage_directory
+  dir = File.expand_path('#{Settings[:coverage_output_dir]}', '#{Rake.application.original_dir}')
+  FileUtils.mkdir_p dir
+  dir
+end
+
+class SimpleCov::Formatter::MergedFormatter
+  def format(result)
+    SimpleCov::Formatter::HTMLFormatter.new.format(result)
+    SimpleCov::Formatter::RcovFormatter.new.format(result)
+    File.open("\#{coverage_directory}/covered_percent", "w") do |f|
+      f.puts result.source_files.covered_percent.to_f
+    end
+  end
+end
+
+SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
+SimpleCov.configure do
+  coverage_dir '#{Settings[:coverage_output_dir]}'
+  root '#{Rake.application.original_dir}'
+end
+
+SimpleCov.start do
+  add_filter '/spec/'
+#  add_filter '/config/'
+#  add_filter '/lib/'
+#
+#  add_group 'Controllers',  'lib/gung_ho/controller'
+#  add_group 'Models',       'lib/gung_ho/model'
+#  add_group 'Helpers',      'lib/gung_ho/helper'
+#  add_group 'Views',        'lib/gung_ho/view'
+#  add_group 'Configs',      'lib/gung_ho/config'
+end
+
+#SimpleCov.start
+      END_HELPER
+    end
+  end
 end

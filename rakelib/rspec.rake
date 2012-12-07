@@ -29,6 +29,14 @@ begin
     spec.pattern = FileList["{#{Settings[:test_dirs].join(',')}}/**/*_spec.rb"]
   end
 
+  namespace :spec do
+    desc "Create rspec coverage"
+    task :coverage do
+      ENV['COVERAGE'] = 'true'
+      Rake::Task["spec"].execute
+    end
+  end
+
   begin
     require 'rcov'
     RSpec::Core::RakeTask.new(:rcov) do |spec|
@@ -46,6 +54,7 @@ begin
       helper_file = File.join(dir, 'spec_helper.rb')
       unless File.exist? helper_file
         File.open(helper_file, 'w') do |f|
+          f.puts "require_relative '../simplecov_helper.rb' if ENV['COVERAGE'] == 'true'"
           f.puts "$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))"
           f.puts "$LOAD_PATH.unshift(File.dirname(__FILE__))"
           f.puts ""
