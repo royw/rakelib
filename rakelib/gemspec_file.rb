@@ -7,6 +7,7 @@ class GemspecFile
   def initialize
     @header = []
     @body = []
+    @gem_dependencies = []
     @dev_dependencies = []
     @footer = []
   end
@@ -21,8 +22,11 @@ class GemspecFile
         when :in_header
           if line =~ %r{^\s*gem\.}
             mode = :in_dev_body
-            if line =~ %r{^\s*gem\.add_development_dependency}
+            case line
+            when %r{^\s*gem\.add_development_dependency}
               @dev_dependencies << line
+            when %r{^\s*gem\.add_dependency}
+              @gem_dependencies << line
             else
               @body << line
             end
@@ -34,8 +38,11 @@ class GemspecFile
             mode = :in_footer
             @footer << line
           else
-            if line =~ %r{^\s*gem\.add_development_dependency}
+            case line
+            when %r{^\s*gem\.add_development_dependency}
               @dev_dependencies << line
+            when %r{^\s*gem\.add_dependency}
+              @gem_dependencies << line
             else
               @body << line
             end
@@ -53,6 +60,13 @@ class GemspecFile
     @dev_dependencies = gems.map{|gem| "  #{gem}"}
   end
 
+  # replace the "gem.add_dependency(...)" lines in the development block
+  # @param [Array<String>] gems an array of "gem.add_dependency(...)" lines for the development block
+  # @return [String] the new @@gem_dependencies
+  def gems=(gems)
+    @gem_dependencies = gems.map{|gem| "  #{gem}"}
+  end
+
   # reassemble the file and save it
   # @param [String] filename the destination .gemspec path
   def save(filename=@filename)
@@ -62,6 +76,7 @@ class GemspecFile
     File.open(filename, 'w') do |f|
       f.puts @header
       f.puts @body
+      f.puts @gem_dependencies
       f.puts @dev_dependencies
       f.puts @footer
     end

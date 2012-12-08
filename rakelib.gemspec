@@ -14,8 +14,15 @@ Gem::Specification.new do |gem|
   gem.name          = "Example"
   gem.require_paths = ["lib"]
   gem.version       = Example::VERSION
-  gem.add_development_dependency('bcrypt-ruby')
-  gem.add_development_dependency('bson_ext')
+  gem.add_dependency('bcrypt-ruby')
+  gem.add_dependency('bson_ext')
+  gem.add_dependency('haml')
+  gem.add_dependency('mongo')
+  gem.add_dependency('mongo_mapper', "~> 0.12.0")
+  gem.add_dependency('rack-accept')
+  gem.add_dependency('ramaze')
+  gem.add_dependency('sass')
+  gem.add_dependency('sequel')
   gem.add_development_dependency('cane')
   gem.add_development_dependency('capybara')
   gem.add_development_dependency('cucumber')
@@ -25,20 +32,13 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('doc_to_dash')
   gem.add_development_dependency('factory_girl', '~> 2.0')  if RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('factory_girl', '~> 3.0')  if RUBY_VERSION =~ %r{^1\.9\.}
-  gem.add_development_dependency('haml')
-  gem.add_development_dependency('mongo')
-  gem.add_development_dependency('mongo_mapper', "~> 0.12.0")
   gem.add_development_dependency('pygments.rb')
-  gem.add_development_dependency('rack-accept')
   gem.add_development_dependency('rack-test')
   gem.add_development_dependency('rake')
-  gem.add_development_dependency('ramaze')
   gem.add_development_dependency('rcov') if RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('rdoc')
   gem.add_development_dependency('redcarpet')
   gem.add_development_dependency('rspec')
-  gem.add_development_dependency('sass')
-  gem.add_development_dependency('sequel')
   gem.add_development_dependency('simplecov')  unless RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('simplecov-rcov')  unless RUBY_VERSION =~ %r{^1\.8\.}
   gem.add_development_dependency('versionomy')

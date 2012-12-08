@@ -11,8 +11,6 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #
 # add to your .gemspec:
 #   gem.add_development_dependency('rspec')
-# or add to your Gemfile:
-#   gem 'rspec'
 
 begin
   require 'rspec/core'

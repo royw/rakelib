@@ -20,9 +20,6 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 
 # add to your .gemspec:
 #   gem.add_development_dependency('rdoc')
-# or add to your Gemfile:
-#   gem 'rdoc'
-
 
 begin
   require 'rdoc/task'

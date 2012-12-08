@@ -8,8 +8,6 @@
 
 # add to your .gemspec:
 #   gem.add_development_dependency('versionomy')
-# or add to your Gemfile:
-#   gem 'versionomy'
 
 begin
   require File.expand_path('version.rb', File.dirname(__FILE__))

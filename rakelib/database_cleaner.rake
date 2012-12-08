@@ -6,5 +6,3 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #
 # add to your .gemspec:
 #   gem.add_development_dependency('database_cleaner')
-# or add to your Gemfile:
-#   gem 'database_cleaner'

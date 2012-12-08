@@ -19,9 +19,7 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # rake db:zap[mode]        # Zap the database my running all the down migrations
 
 # add to your .gemspec:
-#   gem.add_development_dependency('sequel')
-# or add to your Gemfile:
-#   gem 'sequel'
+#   gem.add_dependency('sequel')
 
 begin
   require File.expand_path(Settings[:db_config_file], Rake.application.original_dir)

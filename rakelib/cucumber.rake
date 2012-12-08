@@ -5,11 +5,6 @@
 #
 # add to your .gemspec:
 #   gem.add_development_dependency('cucumber')
-# or add to your Gemfile:
-#   gem 'cucumber'
-#
-# Optionally
-#
 
 begin
   require 'cucumber/rake/task'

@@ -5,15 +5,10 @@
 #   brew install mongodb
 #
 # add to your .gemspec:
-#   gem.add_development_dependency('mongo')
-#   gem.add_development_dependency('mongo_mapper', "~> 0.12.0")
-#   gem.add_development_dependency('bson_ext')
-#   gem.add_development_dependency('bcrypt-ruby')
-# or add to your Gemfile:
-#   gem 'mongo'
-#   gem 'mongo_mapper', "~> 0.12.0"
-#   gem 'bson_ext'
-#   gem 'bcrypt-ruby', :require => 'bcrypt'
+#   gem.add_dependency('mongo')
+#   gem.add_dependency('mongo_mapper', "~> 0.12.0")
+#   gem.add_dependency('bson_ext')
+#   gem.add_dependency('bcrypt-ruby')
 
 begin
 

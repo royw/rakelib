@@ -15,8 +15,6 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #
 # add to your .gemspec:
 #   gem.add_development_dependency('cane')
-# or add to your Gemfile:
-#   gem 'cane'
 
 begin
   require 'cane/rake_task'

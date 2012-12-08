@@ -12,8 +12,6 @@
 #
 # add to your .gemspec:
 #   gem.add_development_dependency('doc_to_dash')
-# or add to your Gemfile:
-#   gem 'doc_to_dash'
 
 begin
   require 'doc_to_dash'

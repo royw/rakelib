@@ -18,16 +18,9 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #   gem.add_development_dependency('yard-cucumber')
 #   gem.add_development_dependency('yard-rspec')
 #   gem.add_development_dependency('redcarpet')
-# or add to your Gemfile:
-#   gem 'yard'
-#   gem 'yard-cucumber'
-#   gem 'yard-rspec'
-#   gem 'redcarpet'
 #
 # if your want source listings to include git blame, then use
 #   gem.add_development_dependency('yard-blame')
-# or
-#   gem 'yard-blame'
 #
 # if you want syntax highlighting via pygments (http://pygments.org)
 #
@@ -35,9 +28,6 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # * add the following to your .gemspec
 #     gem.add_development_dependency('yard-pygmentsrb')
 #     gem.add_development_dependency('pygments.rb')
-#   or add to your Gemfile:
-#     gem 'yard-pygmentsrb'
-#     gem 'pygments.rb'
 #
 # then your markdown can include code fragments like:
 # ``` ruby

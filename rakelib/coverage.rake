@@ -14,11 +14,6 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 #   gem.add_development_dependency('rcov') if RUBY_VERSION =~ %r{^1\.8\.}
 #   gem.add_development_dependency('simplecov')  unless RUBY_VERSION =~ %r{^1\.8\.}
 #   gem.add_development_dependency('simplecov-rcov')  unless RUBY_VERSION =~ %r{^1\.8\.}
-# or add to your Gemfile:
-#   gem 'rcov' if RUBY_VERSION =~ %r{^1\.8\.}
-#   gem 'simplecov'  unless RUBY_VERSION =~ %r{^1\.8\.}
-#   gem 'simplecov-rcov'  unless RUBY_VERSION =~ %r{^1\.8\.}
-
 
 begin
   require 'simplecov'

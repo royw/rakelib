@@ -16,20 +16,12 @@ require File.expand_path('rakelib/settings.rb', Rake.application.original_dir)
 # * Settings[:ramaze_spec_dir]
 #
 # add to your .gemspec:
+#   gem.add_dependency('ramaze')
+#   gem.add_dependency('rack-accept')
+#   gem.add_dependency('haml')
+#   gem.add_dependency('sass')
 #   gem.add_development_dependency('rake')
-#   gem.add_development_dependency('ramaze')
-#   gem.add_development_dependency('rack-accept')
 #   gem.add_development_dependency('rack-test')
-#   gem.add_development_dependency('haml')
-#   gem.add_development_dependency('sass')
-# or add to your Gemfile:
-#   gem 'rake'
-#   gem 'ramaze'
-#   gem 'rack-accept'
-#   gem 'rack-test', require: 'rack/test'
-#   gem 'haml'
-#   gem 'sass'
-
 
 Settings.setting :ramaze_app_dir, :value => "lib/#{Settings[:app_dir]}",
                  :description => 'The directory that contains the app.rb file.'
